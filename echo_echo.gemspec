@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = EchoEcho::VERSION
   spec.authors       = ["Matthew Moskwa"]
   spec.email         = ["matt@pubget.com"]
-  spec.summary       = %q{TODO: Write a short summary. Required.}
-  spec.description   = %q{TODO: Write a longer description. Optional.}
+  spec.summary       = "Ruby gem for EchoNest API"
+  spec.description   = "Ruby gem for EchoNest API"
   spec.homepage      = ""
   spec.license       = "MIT"
 
