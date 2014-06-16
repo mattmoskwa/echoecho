@@ -64,7 +64,7 @@ entity 'artist' do
 end
 ```
 
-Note the `requires` and `optional` lines. Per the docs, methods have required and optional parameters. Some
+Note the `required`, `optional`, and `multiple` lines. Per the docs, methods have required and optional parameters. Some
 required parameters are "one of x or y". To describe this limitation, use the `any: [:x, :y]` construction.
 
 Some parameters can take multiple values. To describe this situtation, use the `multiple: :x` construction. If there
