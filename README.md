@@ -51,7 +51,7 @@ mash.biographies.first.text #=> "FOLLOW US MORE VIDEOS"
 ```
 
 ### DSL
-It is written using a custom DSL that decribes RESTful requests with the terms "entities" (like Artist),
+EchoEcho is written using a custom DSL that decribes RESTful requests with the terms "entities" (like Artist),
 and "methods" (like biographies). For example, to describe the url "/artist/biographies", and therefore the method Artist.biographies, use the following syntax:
 
 ```ruby
@@ -66,7 +66,8 @@ end
 
 Note the `requires` and `optional` lines. Per the docs, methods have required and optional parameters. Some
 required parameters are "one of x or y". To describe this limitation, use the `any: [:x, :y]` construction.
-Some parameters can take multiple values. To describe this situtation, use the `multiple: :x` contruction. If there
+
+Some parameters can take multiple values. To describe this situtation, use the `multiple: :x` construction. If there
 is a limit to the number of values a parameter can take, use the `limit` option, as in
 
 ```ruby
