@@ -1,6 +1,6 @@
 # EchoEcho
 
-TODO: Write a gem description
+EchoEcho is a rubygem for accessing the Echo Nest API.
 
 ## Installation
 
@@ -80,7 +80,7 @@ end
 module Description
   global :format, :callbacks
   entity 'artist' do
-  
+
     # ...
   end
 end
@@ -91,7 +91,7 @@ end
 ```ruby
 artist = Artist.search(name: "weezer").first
 artist.class #=> EchoEcho::Artist
-artist.id #=> "AR633SY1187B9AC3B9" 
+artist.id #=> "AR633SY1187B9AC3B9"
 artist.biographies #=> etc
 ```
 

@@ -2,17 +2,17 @@ module EchoEcho
   class Configuration
     attr_accessor :api_key, :consumer_key, :shared_secret
     def api_key
-      @api_key || "YIFPP93UIBIGE7PT6"
+      @api_key
     end
-    
+
     def consumer_key
-      @consumer_key || "8817e87f22fcc2b57da139ecf7db37e9"
+      @consumer_key
     end
-    
+
     def shared_secret
-      @shared_secret || "0plZDM5mSRGfTpB23KwWyg"
+      @shared_secret
     end
-    
+
     def warnings
       { beta: "this is a beta method" }
     end
