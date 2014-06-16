@@ -13,7 +13,7 @@ module EchoEcho
       # scope :entity
       define_method :entity do |name, &blk|
         cname = name.titlecase
-        klass = EchoEcho.const_set cname, Class.new {
+        klass = EchoEcho.const_set cname, Class.new(Base) {
           define_singleton_method :resource_name do
             name
           end
@@ -115,7 +115,7 @@ module EchoEcho
           define_singleton_method(name) do |options={}|
             callbacks.each {|c| c.call(options)}
 
-            response = Request.new(resource_name).get(options.merge(method: name))
+            response = get(options.merge(method: name))
             response.response
           end
         end
