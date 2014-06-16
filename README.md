@@ -43,7 +43,7 @@ and "methods" (like biographies). For example, to describe the url "/artist/biog
 entity 'artist' do
   add_method 'biographies' do
     required any: [:id, :name]
-    optional :format, :callback, :results, :start
+    optional :results, :start
     multiple :license
   end
 end
@@ -74,6 +74,17 @@ end
 
 ## Todo
 - Finish other entities
+
+- Global arguments, like :format, and :callbacks
+```
+module Description
+  global :format, :callbacks
+  entity 'artist' do
+  
+    # ...
+  end
+end
+```
 
 - Instancing, i.e
 
