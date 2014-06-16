@@ -48,7 +48,7 @@ module EchoEcho
     end
     
     def test_error_conditions
-      assert_raisees ArgumentError do
+      assert_raises ArgumentError do
         Artist.similar(notgood: 1)
       end
     end

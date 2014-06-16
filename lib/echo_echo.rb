@@ -23,6 +23,5 @@ RestClient.log = Logger.new STDOUT
 
 require "echo_echo/request"
 require "echo_echo/response"
-require "echo_echo/profile"
 require "echo_echo/dsl"
 require "echo_echo/description"
