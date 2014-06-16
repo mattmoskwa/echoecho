@@ -37,7 +37,7 @@ mash.biographies.first.text #=> "FOLLOW US MORE VIDEOS"
 
 ### DSL
 It is written using a custom DSL that decribes RESTful requests with the terms "entities" (like Artist),
-and "methods" (like biographies). For example, to describe the method Artist.biographies, use the following syntax:
+and "methods" (like biographies). For example, to describe the url "/artist/biographies", and therefore the method Artist.biographies, use the following syntax:
 
 ```ruby
 entity 'artist' do
