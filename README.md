@@ -42,7 +42,7 @@ and "methods" (like biographies). For example, to describe the method Artist.bio
 ```ruby
 entity 'artist' do
   add_method 'biographies' do
-    requires any: [:id, :name]
+    required any: [:id, :name]
     optional :format, :callback, :results, :start
     multiple :license
   end
@@ -86,6 +86,8 @@ artist.biographies #=> etc
 
 - Callbacks
 
+- Error handling
+
 - Rate-limiting
 
 - Format (currently only JSON works)
@@ -93,3 +95,8 @@ artist.biographies #=> etc
 - IDs/id spaces
 
 - Break entities up into own files, i.e. artist.rb, genre.rb
+
+- Add :only option to `multiple` method (i.e. for bucket)
+```
+multiple bucket: {only: [:audio_summary, :artist_discovery, ...]}
+```

@@ -22,8 +22,8 @@ module EchoEcho
         # open the module because we need to share scope between the following methods
         
         module_eval do 
-          # scope :requires
-          define_singleton_method :requires do |*req|
+          # scope :required
+          define_singleton_method :required do |*req|
             # extract options from args
             opts_hash = req.extract_options!
             all = req
@@ -54,7 +54,7 @@ module EchoEcho
               _args += (any + all)
             }
           end
-          # end scope :requres
+          # end scope :requred
           # scope :optional
           define_singleton_method :optional do |*opts|
             callbacks << lambda { |args|
