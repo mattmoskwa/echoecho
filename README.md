@@ -30,7 +30,7 @@ Results are returned in JSON format, which are parsed in to ruby hashes and wrap
 which define accessors for all the hash keys.
 
 ```ruby
-raw_value = { "biographies": {"text"=>"FOLLOW US MORE VIDEOS", "site"=>"myspace", "url"=>"http://www.myspace.com/weezer#biography", "license"=>{"type"=>"unknown", "attribution"=>"n/a", "attribution-url"=>"http://www.myspace.com/weezer#biography", "url"=>"n/a", "version"=>"n/a"}, "truncated"=>true}}
+raw_value = { "biographies": [{"text"=>"FOLLOW US MORE VIDEOS", "site"=>"myspace", "url"=>"http://www.myspace.com/weezer#biography", "license"=>{"type"=>"unknown", "attribution"=>"n/a", "attribution-url"=>"http://www.myspace.com/weezer#biography", "url"=>"n/a", "version"=>"n/a"}, "truncated"=>true}]}
 mash = Hashie::Mash.new(raw_values)
 mash.biographies.first.text #=> "FOLLOW US MORE VIDEOS"
 ```
