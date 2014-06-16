@@ -67,7 +67,7 @@ end
 Note the `required`, `optional`, and `multiple` lines. Per the docs, methods have required and optional parameters. Some
 required parameters are "one of x or y". To describe this limitation, use the `any: [:x, :y]` construction.
 
-Some parameters can take multiple values. To describe this situtation, use the `multiple: :x` construction. If there
+Some parameters can take multiple values. To describe this situtation, use the `multiple :x` construction. If there
 is a limit to the number of values a parameter can take, use the `limit` option, as in
 
 ```ruby
@@ -76,6 +76,15 @@ entity 'artist' do
     # ...
     multiple :bucket, :name, seed_catalog: {limit: 5}, id: {limit: 5}
   end
+end
+```
+
+If a parameter can be used with any method, designate it using `global`.
+
+```ruby
+global :format
+entity 'artist' do
+  # ...
 end
 ```
 
@@ -90,17 +99,6 @@ end
 
 ## Todo
 - Finish other entities
-
-- Global arguments, like :format, and :callbacks
-```
-module Description
-  global :format, :callbacks
-  entity 'artist' do
-
-    # ...
-  end
-end
-```
 
 - Instancing, i.e
 

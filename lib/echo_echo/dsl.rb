@@ -1,9 +1,15 @@
 module EchoEcho
   module DSL
     module ClassMethods
-            
+
       klass = nil
-      
+      global_args = []
+      #scope :global
+      define_method :global do |*names|
+        global_args += names
+      end
+      #end scope :global
+
       # scope :entity
       define_method :entity do |name, &blk|
         cname = name.titlecase
@@ -14,14 +20,14 @@ module EchoEcho
         }
         blk.call if blk
       end
-      
+
       # scope :add_method
       define_method :add_method do |name, &blk|
         _args = []
         callbacks = []
+
         # open the module because we need to share scope between the following methods
-        
-        module_eval do 
+        module_eval do
           # scope :required
           define_singleton_method :required do |*req|
             # extract options from args
@@ -43,7 +49,7 @@ module EchoEcho
                   raise ArgumentError.new "missing one or more required arguments #{any}"
                 end
               end
-              
+
               unless all.empty?
                 all.each do |r|
                   unless args.member? r
@@ -57,23 +63,23 @@ module EchoEcho
           # end scope :requred
           # scope :optional
           define_singleton_method :optional do |*opts|
-            callbacks << lambda { |args|
+            callbacks << ->(args) do
               args.keys.each do |a|
-                unless opts.concat(_args).member? a
+                unless opts.concat(_args).concat(global_args).member? a
                   raise ArgumentError.new "#{a} not an accepted option"
                 end
               end
-            }
+            end
           end
           # end scope :optional
-          
+
           # scope :warn
           define_singleton_method :warn do |warning_label|
             message = EchoEcho.config.warnings[warning_label]
             callbacks << lambda { |args| puts "Warning: #{message}" }
           end
           # end scope :warn
-          
+
           # scope :multiple
           define_singleton_method :multiple do |*opts|
             # add callbacks to check these arguments for multiple keys
