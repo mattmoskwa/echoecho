@@ -61,6 +61,7 @@ entity 'artist' do
     multiple :bucket, :name, seed_catalog: {limit: 5}, id: {limit: 5}
   end
 end
+```
 
 ## Contributing
 
