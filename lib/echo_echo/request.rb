@@ -1,18 +1,35 @@
 module EchoEcho
   # @todo Rate-limit
   # @todo Error-handling
+  # @todo look into const_missing and dynamically create classes
   class Request
-    API_KEY = "YIFPP93UIBIGE7PT6"
-    CONSUMER_KEY = "8817e87f22fcc2b57da139ecf7db37e9"
-    SHARED_SECRET = "0plZDM5mSRGfTpB23KwWyg"
-    def initialize(resource_name, params={})
-      @resource = RestClient::Resource.new("http://developer.echonest.com/api/v4/#{resource_name}")
-      @params = params.merge(api_key: API_KEY)
+    API_KEY = EchoEcho.config.api_key
+    CONSUMER_KEY = EchoEcho.config.consumer_key 
+    SHARED_SECRET = EchoEcho.config.shared_secret 
+    include HTTParty
+    base_uri "developer.echonest.com"
+    logger ::Logger.new(STDOUT), :info, :curl
+    disable_rails_query_string_format
+    # def initialize(resource_name, params={})
+    #   @resource = RestClient::Resource.new("http://developer.echonest.com/api/v4/#{resource_name}")
+    #   @params = params.merge(api_key: API_KEY, format: "json")
+    # end
+    # 
+    # def get(params={})
+    #   method = params.delete :method
+    #   @params.merge! params
+    #   raw_response = @resource["/#{method}"].get(params: @params)
+    #   Response.new(raw_response)
+    # end
+    def initialize(resource, params={})
+      @params = params.merge(api_key: API_KEY, format: "json")
+      @resource = resource
     end
     
-    def get(method)
-      raw_response = @resource["/#{method}"].get(params: @params)
-      Response.new(raw_response, method)
+    def get(params={})
+      method = params.delete(:method)
+      raw_response = self.class.get("/api/v4/#{@resource}/#{method}", query: params.merge(@params))
+      Response.new(raw_response)
     end
   end
 end
