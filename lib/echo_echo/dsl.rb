@@ -36,10 +36,11 @@ module EchoEcho
               end
             end
             callbacks << lambda { |args|
+              args = args.keys
               if any.present?
                 # some or all of these are required
                 unless args.any? {|a| any.member? a}
-                  raise ArgumentError.new "missing #{any}"
+                  raise ArgumentError.new "missing one or more required arguments #{any}"
                 end
               end
               
@@ -57,8 +58,7 @@ module EchoEcho
           # scope :optional
           define_singleton_method :optional do |*opts|
             callbacks << lambda { |args|
-          
-              args.each do |a|
+              args.keys.each do |a|
                 unless opts.concat(_args).member? a
                   raise ArgumentError.new "#{a} not an accepted option"
                 end
@@ -79,11 +79,22 @@ module EchoEcho
             # add callbacks to check these arguments for multiple keys
             o = opts.extract_options!
             _args += opts
+            o.each do |k,v|
+              if !v.is_a? Hash
+                raise ArgumentError.new "Unsupported argument type: #{k}:#{v}"
+              elsif !v.has_key? :limit
+                raise ArgumentError.new "Unsupported argument option: #{v}"
+              end
+            end
             callbacks << ->(args) do
               # check that only args in opts have multiple values
               args.each do |k,v|
                 if v.is_a? Array and v.size > 1
-                  unless k.in? opts
+                  if k.in? o.keys
+                    unless v.size <= o[k][:limit]
+                      raise ArgumentError.new "Paramter #{k} does not accept more than #{o[k][:limit]} values"
+                    end
+                  elsif !k.in? opts
                     raise ArgumentError.new "Method doesn't accept multiple values for #{k}"
                   end
                 end
@@ -96,8 +107,8 @@ module EchoEcho
         blk.call if blk
         klass.instance_eval do
           define_singleton_method(name) do |options={}|
-            callbacks.each {|c| c.call(options.keys)}
-            
+            callbacks.each {|c| c.call(options)}
+
             response = Request.new(resource_name).get(options.merge(method: name))
             response.response
           end

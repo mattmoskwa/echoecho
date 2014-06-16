@@ -36,10 +36,21 @@ module EchoEcho
     end
     
     def test_multiple_values_with_limit
-      # get 5 artists then grab their IDs
+      # get some artists then grab their IDs
       artists = Artist.search(genre: "rock", results: 6).artists
-      results = Artist.similar(id: [artists[0..3].map(&:id)])
+      # test that similar returns with < 5
+      results = Artist.similar(id: artists[0..3].map(&:id))
       assert results.artists
+      # now try > 5
+      assert_raises ArgumentError do
+        results = Artist.similar(id: artists.map(&:id))
+      end
+    end
+    
+    def test_error_conditions
+      assert_raisees ArgumentError do
+        Artist.similar(notgood: 1)
+      end
     end
   end
 end

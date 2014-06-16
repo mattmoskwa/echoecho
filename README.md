@@ -18,7 +18,49 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+This is a rubygem wrapper for the Echo Nest API. See ( http://developer.echonest.com/docs/v4 )
+To use, simply require the gem, and follow the convention that classes are top-level namespaces, like Artist, and Genre,
+and methods are class methods on those classes. For example, to get Artist biographies:
+
+```ruby
+biographies = EchoEcho::Artist.biographies(name: "weezer").biographies
+```
+
+Results are returned in JSON format, which are parsed in to ruby hashes and wrapped in Hashie::Mash objects,
+which define accessors for all the hash keys.
+
+```ruby
+raw_value = { "biographies": {"text"=>"FOLLOW US MORE VIDEOS", "site"=>"myspace", "url"=>"http://www.myspace.com/weezer#biography", "license"=>{"type"=>"unknown", "attribution"=>"n/a", "attribution-url"=>"http://www.myspace.com/weezer#biography", "url"=>"n/a", "version"=>"n/a"}, "truncated"=>true}}
+mash = HashieMash.new(raw_values)
+mash.biographies.first.text #=> "FOLLOW US MORE VIDEOS"
+```
+
+### DSL
+It is written using a custom DSL that decribes RESTful requests with the terms "entities" (like Artist),
+and "methods" (like biographies). For example, to describe the method Artist.biographies, use the following syntax:
+
+```ruby
+entity 'artist' do
+  add_method 'biographies' do
+    requires any: [:id, :name]
+    optional :format, :callback, :results, :start
+    multiple :license
+  end
+end
+```
+
+Note the `requires` and `optional` lines. Per the docs, methods have required and optional parameters. Some
+required parameters are "one of x or y". To describe this limitation, use the `any: [:x, :y]` construction.
+Some parameters can take multiple values. To describe this situtation, use the `multiple: :x` contruction. If there
+is a limit to the number of values a parameter can take, use the `limit` option, as in
+
+```ruby
+entity 'artist' do
+  add_method 'similar' do
+    # ...
+    multiple :bucket, :name, seed_catalog: {limit: 5}, id: {limit: 5}
+  end
+end
 
 ## Contributing
 
@@ -30,11 +72,22 @@ TODO: Write usage instructions here
 
 
 ## Todo
-1. Finish Artist and Profile classes
-	- Artist needs a purpose if Profile is going to be separate
-		- add class methods using class method "add_method"
-	- Can we refactor Profile to use add_method?
-	- Figure out how to add args to Methods.add_method
-		
-2. Write Songs class
-3. Write Playlists class
+- Finish other entities
+
+- Instancing, i.e
+
+```ruby
+artist = Artist.search(name: "weezer").first
+artist.id #=> "AR633SY1187B9AC3B9" 
+artist.biographies #=> etc
+```
+
+- Callbacks
+
+- Rate-limiting
+
+- Format (currently only JSON works)
+
+- IDs/id spaces
+
+- Break entities up into own files, i.e. artist.rb, genre.rb
