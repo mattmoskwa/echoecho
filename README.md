@@ -6,15 +6,11 @@ EchoEcho is a rubygem for accessing the Echo Nest API.
 
 Add this line to your application's Gemfile:
 
-    gem 'echo_echo'
+    gem 'echo_echo', git: 'git@github.com:mattmoskwa/echoecho'
 
 And then execute:
 
     $ bundle
-
-Or install it yourself as:
-
-    $ gem install echo_echo
 
 ## Usage
 

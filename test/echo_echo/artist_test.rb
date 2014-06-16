@@ -56,5 +56,11 @@ module EchoEcho
     def test_global_args
       assert Artist.biographies(name: "weezer", format: "json")
     end
+
+    def test_base_has_response
+      Artist.biographies(name: "weezer")
+      response = Artist.last_response
+      assert response.status.message == "Success"
+    end
   end
 end

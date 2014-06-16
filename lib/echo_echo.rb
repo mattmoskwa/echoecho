@@ -13,7 +13,7 @@ module EchoEcho
   def self.configure
     yield self.config
   end
-  
+
   def self.config
     @config ||= Configuration.new
   end
@@ -21,7 +21,9 @@ end
 
 RestClient.log = Logger.new STDOUT
 
+
 require "echo_echo/request"
 require "echo_echo/response"
+require "echo_echo/base"
 require "echo_echo/dsl"
 require "echo_echo/description"
