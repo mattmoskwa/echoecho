@@ -19,6 +19,21 @@ Or install it yourself as:
 ## Usage
 
 This is a rubygem wrapper for the Echo Nest API. See [here]( http://developer.echonest.com/docs/v4 ).
+
+To make requests to the API, you'll need to set up a develop account and get developer keys. Once you have these, set them up by including an `echonest.rb` configuration file, like so:
+
+```
+EchoEcho.configuration do |config|
+  config.api_key = "your-api-key"
+  config.consumer_key = "your-consumer-key"
+  config.shared_secret = "your-shared-secret"
+end
+```
+
+In Ruby on Rails, this file generally goes in your `config/initializers` directory.
+
+To run the test suite against the Echo Nest API, you can also use the included `config/echonest.yml.sample` file. See that file for details.
+
 To use, simply require the gem, and follow the convention that classes are top-level namespaces, like Artist, and Genre,
 and methods are class methods on those classes. For example, to get Artist biographies:
 

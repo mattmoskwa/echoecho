@@ -1,0 +1,5 @@
+# This is a sample config file
+# Add your keys and rename to echonest.yml
+api_key: "your-api-key"
+consumer_key: "your-consumer-key"
+shared_secret: "your-shared-secret"
