@@ -18,7 +18,7 @@ Or install it yourself as:
 
 ## Usage
 
-This is a rubygem wrapper for the Echo Nest API. See ( http://developer.echonest.com/docs/v4 )
+This is a rubygem wrapper for the Echo Nest API. See [here]( http://developer.echonest.com/docs/v4 ).
 To use, simply require the gem, and follow the convention that classes are top-level namespaces, like Artist, and Genre,
 and methods are class methods on those classes. For example, to get Artist biographies:
 
@@ -31,7 +31,7 @@ which define accessors for all the hash keys.
 
 ```ruby
 raw_value = { "biographies": {"text"=>"FOLLOW US MORE VIDEOS", "site"=>"myspace", "url"=>"http://www.myspace.com/weezer#biography", "license"=>{"type"=>"unknown", "attribution"=>"n/a", "attribution-url"=>"http://www.myspace.com/weezer#biography", "url"=>"n/a", "version"=>"n/a"}, "truncated"=>true}}
-mash = HashieMash.new(raw_values)
+mash = Hashie::Mash.new(raw_values)
 mash.biographies.first.text #=> "FOLLOW US MORE VIDEOS"
 ```
 
@@ -79,6 +79,7 @@ end
 
 ```ruby
 artist = Artist.search(name: "weezer").first
+artist.class #=> EchoEcho::Artist
 artist.id #=> "AR633SY1187B9AC3B9" 
 artist.biographies #=> etc
 ```
